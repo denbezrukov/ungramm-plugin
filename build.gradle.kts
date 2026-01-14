@@ -82,6 +82,11 @@ tasks {
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         dependsOn(generateLexer, generateParser)
     }
+
+    publishPlugin {
+        token.set(System.getenv("PUBLISH_TOKEN") ?: "")
+        enabled = System.getenv("PUBLISH_TOKEN") != null
+    }
 }
 
 kotlin {
