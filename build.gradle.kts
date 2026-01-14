@@ -46,17 +46,11 @@ intellijPlatform {
 }
 
 tasks {
-    // Set the JVM compatibility versions
-    withType<JavaCompile> {
-        sourceCompatibility = "17"
-        targetCompatibility = "17"
-    }
-
     // Generate lexer from JFlex file
     val generateLexer = register<org.jetbrains.grammarkit.tasks.GenerateLexerTask>("generateUnGrammarLexer") {
         sourceFile.set(file("src/main/kotlin/org/ungramm/ungramm/lang/UnGrammar.flex"))
         targetOutputDir.set(file("src/main/gen/org/ungramm/ungramm/lang"))
-        purgeOldFiles.set(true)
+        purgeOldFiles.set(false)
     }
 
     // Generate parser from BNF file
@@ -65,14 +59,17 @@ tasks {
         targetRootOutputDir.set(file("src/main/gen"))
         pathToParser.set("org/ungramm/ungramm/lang/parser/UnGrammarParser.java")
         pathToPsiRoot.set("org/ungramm/ungramm/lang/psi")
-        purgeOldFiles.set(true)
+        purgeOldFiles.set(false)
     }
 
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    // Set the JVM compatibility versions
+    withType<JavaCompile> {
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
         dependsOn(generateLexer, generateParser)
     }
 
-    withType<JavaCompile> {
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         dependsOn(generateLexer, generateParser)
     }
 }
