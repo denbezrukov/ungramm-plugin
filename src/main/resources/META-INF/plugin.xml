@@ -1,0 +1,56 @@
+<!-- Plugin Configuration File: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN, cannot be changed between the plugin versions. -->
+    <id>org.ungramm.ungramm</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-name -->
+    <name>Ungramm</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor url="https://www.yourcompany.com">YourCompany</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-description -->
+    <description><![CDATA[
+        Enter short description for your plugin here.<br>
+        <em>most HTML tags may be used</em>
+    ]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <resource-bundle>messages.MyMessageBundle</resource-bundle>
+    <!-- Extensions defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType name="UnGrammar File"
+                  implementationClass="org.ungramm.ungramm.lang.UnGrammarFileType"
+                  fieldName="INSTANCE"
+                  language="UnGrammar"
+                  extensions="ungram"/>
+        <lang.parserDefinition language="UnGrammar"
+                               implementationClass="org.ungramm.ungramm.lang.UnGrammarParserDefinition"/>
+        <psi.referenceContributor language="UnGrammar"
+                                  implementation="org.ungramm.ungramm.lang.psi.UnGrammarReferenceContributor"/>
+        <lang.formatter language="UnGrammar"
+                        implementationClass="org.ungramm.ungramm.lang.formatter.UnGrammarFormattingModelBuilder"/>
+        <lang.syntaxHighlighterFactory language="UnGrammar"
+                                       implementationClass="org.ungramm.ungramm.lang.highlight.UnGrammarSyntaxHighlighterFactory"/>
+        <annotator language="UnGrammar"
+                   implementationClass="org.ungramm.ungramm.lang.highlight.UnGrammarAnnotator"/>
+        <colorSettingsPage implementation="org.ungramm.ungramm.lang.highlight.UnGrammarColorSettingsPage"/>
+        <lang.findUsagesProvider language="UnGrammar"
+                                 implementationClass="org.ungramm.ungramm.lang.UnGrammarFindUsagesProvider"/>
+        <completion.contributor language="UnGrammar"
+                                implementationClass="org.ungramm.ungramm.lang.UnGrammarCompletionContributor"/>
+        <lang.foldingBuilder language="UnGrammar"
+                             implementationClass="org.ungramm.ungramm.lang.UnGrammarFoldingBuilder"/>
+        <lang.elementManipulator forClass="org.ungramm.ungramm.lang.psi.UnGrammarAtom"
+                                 implementationClass="org.ungramm.ungramm.lang.psi.UnGrammarAtomManipulator"/>
+
+        <toolWindow id="MyToolWindow" factoryClass="org.ungramm.ungramm.MyToolWindowFactory"
+                    icon="AllIcons.Toolwindows.ToolWindowPalette"/>
+    </extensions>
+</idea-plugin>

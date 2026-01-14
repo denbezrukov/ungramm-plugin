@@ -1,0 +1,55 @@
+{
+  parserClass="org.ungramm.ungramm.lang.parser.UnGrammarParser"
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="UnGrammar"
+  psiImplClassSuffix="Impl"
+  psiPackage="org.ungramm.ungramm.lang.psi"
+  psiImplPackage="org.ungramm.ungramm.lang.psi.impl"
+
+  elementTypeHolderClass="org.ungramm.ungramm.lang.psi.UnGrammarTypes"
+  elementTypeClass="org.ungramm.ungramm.lang.psi.UnGrammarElementType"
+  tokenTypeClass="org.ungramm.ungramm.lang.psi.UnGrammarTokenType"
+
+  implements("rule")="org.ungramm.ungramm.lang.psi.UnGrammarNamedElement"
+  mixin("rule")="org.ungramm.ungramm.lang.psi.impl.UnGrammarRuleMixin"
+  mixin("atom")="org.ungramm.ungramm.lang.psi.impl.UnGrammarAtomMixin"
+
+  tokens=[
+    COMMENT='regexp://.+'
+    EQ='='
+    PIPE='|'
+    STAR='*'
+    QUESTION='?'
+    LPAREN='('
+    RPAREN=')'
+    COLON=':'
+    COMMA=','
+    STRING="regexp:'[^']*'"
+    IDENT='regexp:[a-zA-Z_][a-zA-Z0-9_]*'
+  ]
+}
+
+ungrammarFile ::= rule*
+
+rule ::= IDENT EQ alternation {pin=2 recoverWhile=rule_recover}
+
+private rule_recover ::= !(IDENT EQ)
+
+alternation ::= sequence (PIPE sequence)*
+
+sequence ::= sequence_item*
+
+private sequence_item ::= !(IDENT EQ) item
+
+item ::= labeled | atom postfix?
+
+labeled ::= IDENT COLON atom postfix?
+
+atom ::= atom_ident | STRING | group
+
+private atom_ident ::= !(IDENT EQ) IDENT
+
+private group ::= LPAREN alternation RPAREN
+
+postfix ::= STAR | QUESTION

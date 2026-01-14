@@ -1,0 +1,12 @@
+// CSS Un-Grammar example
+Rule = name:IDENT '=' body:Alternation
+
+Alternation = Sequence ('|' Sequence)*
+
+Sequence = Item*
+
+Item = label:IDENT? atom:Atom postfix:('*' | '?')?
+
+Atom = IDENT | 'string' | Group
+
+Group = '(' Alternation ')'

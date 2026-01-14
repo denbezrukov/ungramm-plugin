@@ -1,0 +1,11 @@
+UnGrammar File
+  UnGrammarRuleImpl(RULE)
+    PsiElement(UnGrammarTokenType.IDENT)('Name')
+    PsiWhiteSpace(' ')
+    PsiElement(UnGrammarTokenType.=)('=')
+    PsiWhiteSpace(' ')
+    UnGrammarAlternationImpl(ALTERNATION)
+      UnGrammarSequenceImpl(SEQUENCE)
+        UnGrammarItemImpl(ITEM)
+          UnGrammarAtomImpl(ATOM)
+            PsiElement(UnGrammarTokenType.STRING)(''ident'')
