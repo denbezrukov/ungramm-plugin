@@ -53,14 +53,14 @@ tasks {
     }
 
     // Generate lexer from JFlex file
-    val generateLexer = task<org.jetbrains.grammarkit.tasks.GenerateLexerTask>("generateUnGrammarLexer") {
+    val generateLexer = register<org.jetbrains.grammarkit.tasks.GenerateLexerTask>("generateUnGrammarLexer") {
         sourceFile.set(file("src/main/kotlin/org/ungramm/ungramm/lang/UnGrammar.flex"))
         targetOutputDir.set(file("src/main/gen/org/ungramm/ungramm/lang"))
         purgeOldFiles.set(true)
     }
 
     // Generate parser from BNF file
-    val generateParser = task<org.jetbrains.grammarkit.tasks.GenerateParserTask>("generateUnGrammarParser") {
+    val generateParser = register<org.jetbrains.grammarkit.tasks.GenerateParserTask>("generateUnGrammarParser") {
         sourceFile.set(file("src/main/kotlin/org/ungramm/ungramm/lang/UnGrammar.bnf"))
         targetRootOutputDir.set(file("src/main/gen"))
         pathToParser.set("org/ungramm/ungramm/lang/parser/UnGrammarParser.java")
@@ -69,6 +69,10 @@ tasks {
     }
 
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        dependsOn(generateLexer, generateParser)
+    }
+
+    withType<JavaCompile> {
         dependsOn(generateLexer, generateParser)
     }
 }
