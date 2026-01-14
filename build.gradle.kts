@@ -85,7 +85,7 @@ tasks {
 
     publishPlugin {
         token.set(System.getenv("PUBLISH_TOKEN") ?: "")
-        enabled = System.getenv("PUBLISH_TOKEN") != null
+        onlyIf { System.getenv("PUBLISH_TOKEN") != null }
     }
 }
 
