@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "2.1.20"
     id("org.jetbrains.intellij.platform") version "2.10.2"
     id("org.jetbrains.grammarkit") version "2022.3.2.2"
+    id("org.jetbrains.changelog") version "2.2.1"
 }
 
 group = "org.ungramm"
@@ -28,20 +29,23 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
 }
 
+changelog {
+    version.set(project.version.toString())
+    path.set(file("CHANGELOG.md").canonicalPath)
+}
+
 intellijPlatform {
     pluginConfiguration {
         ideaVersion {
             sinceBuild = "252.25557"
         }
 
-        changeNotes = """
-            Initial release of UnGramm plugin
-
-            Features:
-            - UnGrammar language support for IntelliJ IDEA
-            - Syntax highlighting and parsing
-            - Grammar lexer and parser generation
-        """.trimIndent()
+        changeNotes.set(provider {
+            changelog.renderItem(
+                changelog.get(project.version.toString()).withHeader(false).withEmptySections(false),
+                org.jetbrains.changelog.Changelog.OutputType.HTML
+            )
+        })
     }
 
     pluginVerification {
