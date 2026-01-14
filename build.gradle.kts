@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "org.ungramm"
-version = "1.0-SNAPSHOT"
+version = "0.1.0"
 
 repositories {
     mavenCentral()
@@ -35,7 +35,12 @@ intellijPlatform {
         }
 
         changeNotes = """
-            Initial version
+            Initial release of UnGramm plugin
+
+            Features:
+            - UnGrammar language support for IntelliJ IDEA
+            - Syntax highlighting and parsing
+            - Grammar lexer and parser generation
         """.trimIndent()
     }
 }
