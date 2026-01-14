@@ -43,6 +43,12 @@ intellijPlatform {
             - Grammar lexer and parser generation
         """.trimIndent()
     }
+
+    pluginVerification {
+        ides {
+            recommended()
+        }
+    }
 }
 
 tasks {
