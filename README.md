@@ -17,10 +17,6 @@ This plugin provides full IDE support for `.ungram` files:
 - **Code Completion** - Auto-complete rule names with type-ahead filtering
 - **Rename Refactoring** - Inline rename with automatic reference updates (F6 or Shift+F6)
 
-### Code Formatting
-- Smart spacing around operators (`=`, `|`, `:`, `*`, `?`)
-- Automatic code formatting (Ctrl+Alt+L / Cmd+Opt+L)
-
 ### Code Folding
 - Fold long rules (>80 chars) or multi-line rules
 - Placeholder shows `RuleName = ...`
